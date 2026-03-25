@@ -1,15 +1,7 @@
-# Static Pointcloud Publisher
+# Static OBJ RVIZ Marker Publisher
 
-## Installation
+Colcon build and run using 
 
-### Liblas
-
-https://liblas.org/compilation.html#compilation
-
-Need GDAL? 
-- https://mothergeo-py.readthedocs.io/en/latest/development/how-to/gdal-ubuntu-pkg.html#install-gdal-ogr 
-
-PROJ? 
-- sudo apt-get install libproj-dev
-
-libgeotiff? 
+```
+ros2 run static_model_viz_publisher static_model_viz_publisher --ros-args -p obj_file_path:=<PATH TO OBJ>
+```
