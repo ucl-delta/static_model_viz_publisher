@@ -24,11 +24,13 @@ public:
         this->declare_parameter<std::string>("frame_id", "world");
         this->declare_parameter<std::string>("name", "model");
         this->declare_parameter<std::string>("obj_file_path", "");
+        this->declare_parameter<float>("scale", 0.001f);
         
         this->get_parameter("namespace", ns);
         this->get_parameter("frame_id", frame_id);
         this->get_parameter("name", object_name);
         this->get_parameter("obj_file_path", obj_file_path_);
+        this->get_parameter("scale", scale_);
 
         // Initialize the publisher
         auto qos = rclcpp::QoS(rclcpp::QoSInitialization(qos_profile_latched.history, 100), qos_profile_latched);
@@ -45,9 +47,14 @@ public:
         marker.action = visualization_msgs::msg::Marker::ADD;
         marker.mesh_resource = "file://" + obj_file_path_;
 
-        marker.scale.x = 1;
-        marker.scale.y = 1;
-        marker.scale.z = 1;
+        marker.scale.x = 1 * scale_;
+        marker.scale.y = 1 * scale_;
+        marker.scale.z = 1 * scale_;
+
+        marker.color.r = 0.8f;
+        marker.color.g = 0.8f;
+        marker.color.b = 0.8f;
+        marker.color.a = 1.0f;
 
         // Publish
         this->publisher_->publish(marker);
@@ -56,7 +63,7 @@ public:
     }
 
 private:
-
+    float scale_ = 1.0;
     std::string ns;
     std::string object_name;
     std::string frame_id;
